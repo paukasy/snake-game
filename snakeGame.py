@@ -1,30 +1,31 @@
-import pygame
-import random #for placing random food for snake
+import pygame, sys, random
+from pygame.math import Vector2
+
+class FRUIT:
+    def __init__(self):
+        self.x = random.randint(0,cellNumber - 1)
+        self.y = random.randint(0,cellNumber - 1)
+        self.pos = Vector2(self.x,self.y)
+        
+    def draw_fruit(self):
+        fruit_rect = pygame.Rect(int(self.pos.x * cellSize),int(self.pos.y * cellSize),cellSize,cellSize)
+        pygame.draw.rect(screen,(126,166,114),fruit_rect)
 
 pygame.init()
+cellSize = 40
+cellNumber = 20
+screen = pygame.display.set_mode((cellNumber * cellSize,cellNumber * cellSize))
+clock = pygame.time.Clock()
 
-screenWidth = 640
-screenHeight = 480
-gameWindow = pygame.display.set_mode((screenWidth, screenHeight))
+fruit = FRUIT()
 
-# Game Title
-pygame.display.set_caption("Snake Game")
-
-black = (0, 0, 0)  # Black color for background
-white = (255, 255, 255)  # White color for text or the snake body
-
-running = True
-while running:
+while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            running = False
-    
-    gameWindow.fill(black)
-    
-    pygame.display.update()
-    
-    pygame.time.Clock().tick(15)
-    
-    
+            pygame.quit()
+            sys.exit()
 
-pygame.quit()
+    screen.fill((175,215,70))
+    fruit.draw_fruit()
+    pygame.display.update()
+    clock.tick(60)
